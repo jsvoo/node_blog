@@ -13,7 +13,7 @@ exports.allPosts = async (req, res)=>{
     res.send(allPosts)
 }
 
-exports.createPost = upload.any(),  (req, res)=>{
+exports.createPost =   (req, res)=>{
     const post = new postModel(req.body)
 
     req.files.map(e=>{
@@ -27,7 +27,7 @@ exports.createPost = upload.any(),  (req, res)=>{
     post.save()
 
     res.send(post)
-}
+} 
 
 
 exports.singlePost = async(req, res)=>{
@@ -41,4 +41,17 @@ exports.deletePost = async(req, res)=>{
         await commentModel.deleteMany({ post_id: req.params.id })
         // await likeModel.deleteMany({ post_id: req.params.id }) //TO BE INCLUDED WHEN LIKEMODEL IS DEVELOPED
         res.send("Post deleted successfully") 
+}
+
+exports.updatePost = async(req, res)=>{
+    const body = req.body
+    req.files.map(e=>{
+        switch (e.fieldname) {
+            case"image" : body.image = e.filename
+                
+                break; 
+        }
+    })
+   const newPost = await postModel.findByIdAndUpdate({_id:req.body.id}, body)
+    res.send(body)
 }
