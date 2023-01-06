@@ -1,9 +1,10 @@
 const express = require("express")
-const { postHome } = require("../callbacks/posts")
+const { postHome, allPosts } = require("../callbacks/posts")
 const router = express.Router()
 
 router.get("/", postHome)
 
+router.get("/posts", allPosts)
 
 
 
