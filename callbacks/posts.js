@@ -55,3 +55,8 @@ exports.updatePost = async(req, res)=>{
    const newPost = await postModel.findByIdAndUpdate({_id:req.body.id}, body)
     res.send(body)
 }
+
+exports.usersPosts= async (req, res)=>{
+    const posts = postModel.find({user_id: req.params.user_id})
+    res.send(posts)
+}
